@@ -15,6 +15,19 @@ Reference implementation for the paper:
 
 ---
 
+## Reproduce paper tables
+
+| Paper artifact | Command | Output |
+|---|---|---|
+| **Figure 1** | `jupyter nbconvert --execute notebooks/02_cwt_visualization.ipynb` | `reports/figures/figure1_spectrograms.png` |
+| **Table III** | `python -m src.models.train_mobilenet --config configs/mobilenetv2.yaml --experiment fusion` | `results/mobilenet/*/final_results/` |
+| **Table IV** | `bash scripts/run_balance.sh` then `ls data/processed/ECG_spectrograms/MLII/*/` | folder counts |
+| **Table VI / VII / VIII** | `bash scripts/run_main_model.sh` | `results/main/` |
+| **Figure 2** | (produced by Table VI) | `results/main/fold_1/confusion_matrix_absolute.png` |
+| **Table IX / X** | `bash scripts/run_control_model.sh` | `results/control/` |
+| **Figure 3** | (produced by Table IX) | `results/control/fold_1/confusion_matrix_absolute.png` |
+| **Table XI** | `python -m src.utils.compare_models` | `results/comparison/table_xi.{csv,md}` |
+
 ## 📊 Key Results
 
 | Model | Overall Acc. | Macro F1 | AUC-ROC | Sensitivity (S) | Sensitivity (F) |
