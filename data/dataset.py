@@ -67,3 +67,21 @@ class ECGDataset(Dataset):
         x = torch.from_numpy(img).float().unsqueeze(0) / 255.0
         y = torch.tensor(self.encoded_labels[idx], dtype=torch.long)
         return x, y
+
+class FusionDataset(Dataset):
+    """Paired (MLII, V5) dataset for fusion model."""
+    def __init__(self, data_root, classes, img_size, indices=None):
+        self.mlii = ECGDataset(data_root, classes, img_size, 'MLII',
+                               include_augmented=False, indices=indices)
+        self.v5 = ECGDataset(data_root, classes, img_size, 'V5',
+                             include_augmented=False, indices=indices)
+        if len(self.mlii) != len(self.v5):
+            raise ValueError("MLII and V5 have different sample counts")
+
+    def __len__(self):
+        return len(self.mlii)
+
+    def __getitem__(self, idx):
+        x_mlii, y = self.mlii[idx]
+        x_v5, _ = self.v5[idx]
+        return x_mlii, x_v5, y
