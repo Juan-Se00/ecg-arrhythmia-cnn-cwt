@@ -42,7 +42,7 @@ sensitivity on supraventricular beats** attributable to balancing + augmentation
 - MIT-BIH Arrhythmia Database, 5 classes (N, S, V, F, Q)
 - Custom 3-layer 2D CNN on 128×128 CWT spectrograms
 
-![Confusion Matrix](reports/figures/figure2_confusion_main.png)
+![Confusion Matrix](reports/figures/consolidated_confusion_main.png)
 
 ---
 
