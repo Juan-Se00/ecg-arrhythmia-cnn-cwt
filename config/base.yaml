@@ -1,0 +1,8 @@
+# configs/base.yaml
+paths:
+  data_root: data/processed/ECG_spectrograms
+  results_root: results
+  models_root: models
+seed: 42
+classes: [Fusion, Normal, Supraventricular, Unknown, Ventricular]
+img_size: [128, 128]
