@@ -1,0 +1,65 @@
+# ── PHASE 0: scaffold ──
+mkdir -p src/{data,features,balancing,models,utils} configs scripts tests \
+         notebooks reports/{figures,paper} data/{raw,interim,processed} \
+         models results .github/workflows
+touch src/__init__.py src/{data,features,balancing,utils}/__init__.py
+touch data/raw/.gitkeep data/interim/.gitkeep data/processed/.gitkeep
+touch models/.gitkeep
+
+# ── PHASE 1: utils (no internal deps) ──
+#   src/utils/seeding.py
+#   src/utils/config.py
+#   src/utils/checkpoint.py
+#   src/utils/clear_cache.py
+
+# ── PHASE 2: data primitives (no internal deps except features) ──
+#   src/data/remove_baseline.py
+#   src/data/segment_beats.py
+#   src/features/generate_cwt.py
+
+# ── PHASE 3: data orchestration ──
+#   src/data/load_mitbih.py
+#   src/data/build_dataset.py
+#   src/data/dataset.py
+#   src/balancing/augment_and_balance.py
+
+# ── PHASE 4: models ──
+#   src/models/custom_cnn.py
+#   src/models/mobilenet.py
+#   src/models/trainer.py
+#   src/models/__init__.py
+
+# ── PHASE 5: metrics + plots (depends on models via inference) ──
+#   src/utils/metrics.py
+#   src/utils/plots.py
+
+# ── PHASE 6: training CLI entry points ──
+#   src/models/train_crossval.py
+#   src/models/train_mobilenet.py
+#   src/models/search_hyperparameters.py
+
+# ── PHASE 7: evaluation + aggregation ──
+#   src/models/evaluate_detailed.py
+#   src/utils/extract_best_params.py
+#   src/utils/summarize_results.py
+#   src/utils/compare_models.py
+
+# ── PHASE 8: configs ──
+#   configs/base.yaml
+#   configs/custom_cnn.yaml
+#   configs/main_model.yaml
+#   configs/control_model.yaml
+#   configs/mobilenetv2.yaml
+
+# ── PHASE 9: pyproject.toml, Makefile, requirements.txt ──
+pip install -e ".[dev]"
+
+# ── PHASE 10: tests + CI ──
+#   tests/conftest.py
+#   tests/test_*.py
+#   .github/workflows/tests.yml
+pytest -q
+
+# ── PHASE 11: notebooks + README + LICENSE + CITATION.cff ──
+# ── PHASE 12: verify one end-to-end run ──
+python -m src.data.build_dataset --records 100 101   # smoke test
