@@ -7,7 +7,7 @@ Reference implementation for the paper:
 > Convolutional Neural Networks and ECG Spectro-Temporal Representations.*
 > Undergraduate thesis, Universidad del Rosario & Escuela Colombiana de
 > Ingeniería Julio Garavito.
-> [📄 Full paper](reports/paper/Ardila_Parra_2024_ECG_Arrhythmia_Classification.pdf)
+> [📄 Read the full thesis (PDF)](reports/paper/Ardila_Parra_2024_ECG_Arrhythmia_Classification.pdf)
 
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.0+-red.svg)](https://pytorch.org/)
