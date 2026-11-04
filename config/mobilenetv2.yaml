@@ -1,0 +1,17 @@
+# MobileNetV2 transfer-learning exploration (paper Section III.C, Table III)
+inherits: base.yaml
+
+img_size: [224, 224]               # MobileNet expects 224×224
+
+model:
+  dropout: 0.3
+
+training:
+  k_folds: 5
+  epochs: 30
+  patience: 5
+  batch_size: 32
+  learning_rate: 1.0e-4
+  weight_decay: 1.0e-4
+  include_augmented: false         # exploratory phase uses originals only
+  num_workers: 2
