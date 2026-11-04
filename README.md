@@ -43,32 +43,27 @@ sensitivity on supraventricular beats** attributable to balancing + augmentation
 
 ---
 
-## 🚀 Quickstart
+## 🔁 Reproducing the paper
 
 ```bash
-# 1. Clone
-git clone https://github.com/<your-user>/ecg-arrhythmia-cnn-cwt.git
-cd ecg-arrhythmia-cnn-cwt
+# 1. Data pipeline
+bash scripts/run_preprocessing.sh                # → data/processed/ECG_spectrograms/
+bash scripts/run_balance.sh                      # → 753,400 balanced images
 
-# 2. Environment
-python -m venv .venv && source .venv/bin/activate
-pip install -r requirements.txt
+# 2. Exploratory (Table III)
+python src/models/mobilenet_fusion.py --config configs/mobilenetv2.yaml
 
-# 3. Data (see data/README.md)
-# Download MIT-BIH to data/raw/ then:
-python src/data/load_mitbih.py
-python src/data/remove_baseline.py
-python src/data/segment_beats.py
-python src/features/generate_cwt.py
+# 3. Hyperparameter search (Table VI hyperparams)
+python src/models/search_hyperparameters.py --trials 6 --use-wandb
+python src/utils/extract_best_params.py          # → configs/custom_cnn.yaml
 
-# 4. Balance
-python src/balancing/augment_and_balance.py
+# 4. Control model (Tables IX–X, Figure 3)
+python src/models/train_crossval.py --config configs/control_model.yaml
 
-# 5. Train main model (balanced)
-python src/models/train.py --config configs/custom_cnn.yaml
+# 5. Main model (Tables VI–VIII, Figure 2)
+python src/models/train_crossval.py --config configs/main_model.yaml
 
-# 6. Train control model (no balancing)
-python src/models/train.py --config configs/custom_cnn.yaml --no-balance
-
-# 7. Evaluate
-python src/models/evaluate.py --checkpoint models/best_fold1.pth
+# 6. Aggregate + compare (Table XI)
+python src/utils/summarize_results.py --results-dir results/main
+python src/utils/summarize_results.py --results-dir results/control
+python src/utils/compare_models.py
