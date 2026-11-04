@@ -1,0 +1,15 @@
+# configs/control_model.yaml
+inherits: base.yaml
+training:
+  k_folds: 5
+  epochs: 30
+  patience: 5
+  batch_size: 32
+  learning_rate: 1.0e-4
+  weight_decay: 1.0e-4
+  include_augmented: false      # <-- only difference
+model:
+  dropout: 0.3
+  filters: 64
+  conv_layers: 3
+  dense_units: 256
